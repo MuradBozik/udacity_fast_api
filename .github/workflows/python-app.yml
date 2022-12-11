@@ -21,11 +21,11 @@ jobs:
           python-version: 3.8
           channels: conda-forge
           allow-softlinks: true
-          channel-priority: sctrict
+          channel-priority: strict
       - name: Install dependencies
         shell: bash -el {0}
         run: |
-          if [ -f conda_env.yml ]; then conda env update --file conda_env.yml; fi
+          conda env update --file conda_env.yml
           conda list
       - name: Lint with flake8
         run: |
