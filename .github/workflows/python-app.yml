@@ -15,7 +15,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: project3
@@ -27,6 +26,7 @@ jobs:
         shell: bash -el {0}
         run: |
           if [ -f conda_env.yml ]; then conda env update --name project3 --file conda_env.yml --prune; fi
+          conda activate project3
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
