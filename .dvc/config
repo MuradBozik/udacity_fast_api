@@ -1,4 +1,6 @@
 [core]
-    remote = driveremote
-['remote "driveremote"']
-    url = gdrive://1a7SBm2NNRWnfpSxC8hKoFlsy6psWb0XK
+    remote = awsremote
+    autostage = true
+['remote "awsremote"']
+    url = s3://murad-bucket
+    region = us-east-1
