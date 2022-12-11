@@ -5,8 +5,10 @@ name: Python application
 on:
   push:
     branches: [ "main" ]
+    paths: "conda_env.yml"
   pull_request:
     branches: [ "main" ]
+    paths: "conda_env.yml"
 
 permissions:
   contents: read
@@ -25,8 +27,7 @@ jobs:
       - name: Install dependencies
         shell: bash -el {0}
         run: |
-          conda env update --file ../conda_env.yml
-          conda list
+          conda env update --file conda_env.yml
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
