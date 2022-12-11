@@ -20,7 +20,10 @@ jobs:
     steps: 
       - name: Checkout repo
         uses: actions/checkout@v3
-      - uses: conda-incubator/setup-miniconda@v2
+      - name: Setup DVC
+        uses: iterative/setup-dvc@v1
+      - name: Setup Virtual Environment
+        uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: project3
           python-version: 3.8
@@ -28,9 +31,11 @@ jobs:
           allow-softlinks: true
           channel-priority: strict
           environment-file: conda_env.yml
-      - name: Activate environment
+      - name: Activate environment and Get data and model from remote storage
         run: |
           conda activate project3
+          dvc pull
+          pip install -e .
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
@@ -39,4 +44,5 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Test with pytest
         run: |
-          pytest
+          cd tests
+          pytest . -vv

@@ -1,8 +1,11 @@
 from sklearn.metrics import fbeta_score, precision_score, recall_score
+from sklearn.linear_model import LogisticRegression
+import pickle
+import os
+from pathlib import Path
 
 
-# Optional: implement hyperparameter tuning.
-def train_model(X_train, y_train):
+def train_model(X_train, y_train, config):
     """
     Trains a machine learning model and returns it.
 
@@ -17,8 +20,9 @@ def train_model(X_train, y_train):
     model
         Trained machine learning model.
     """
-
-    pass
+    model = LogisticRegression(**config)
+    model.fit(X_train, y_train)
+    return model
 
 
 def compute_model_metrics(y, preds):
@@ -57,4 +61,21 @@ def inference(model, X):
     preds : np.array
         Predictions from the model.
     """
-    pass
+    return model.predict(X)
+
+
+def save_model(model, encoder, lb, name):
+    folder = Path(os.path.abspath(__file__)).parent
+
+    with open(f"{folder}/../../model/{name}.pkl", "wb") as fp:
+        pickle.dump(model, fp)
+    with open(f"{folder}/../../model/{name}_encoder.pkl", "wb") as ep:
+        pickle.dump(encoder, ep)
+    with open(f"{folder}/../../model/{name}_lb.pkl", "wb") as lp:
+        pickle.dump(lb, lp)
+
+
+def load_model(path):
+    with open(path, "rb") as fp:
+        model = pickle.load(fp)
+    return model

@@ -1,0 +1,4 @@
+outs:
+- md5: a5e971f91734e4b0e1fa3f9fd53264da
+  size: 1924
+  path: logreg_encoder.pkl
