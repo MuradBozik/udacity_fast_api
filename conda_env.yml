@@ -12,5 +12,6 @@ dependencies:
   - jupyterlab==3.5.1
   - fastapi==0.88.0 
   - uvicorn==0.20.0
-  - flake8==5.0.4
+  - pip:
+    - flake8
 

@@ -19,14 +19,14 @@ jobs:
         with:
           activate-environment: project3
           python-version: 3.8
-          channels: conda-forge, defaults
+          channels: conda-forge
           allow-softlinks: true
-          channel-priority: flexible
+          channel-priority: sctrict
       - name: Install dependencies
         shell: bash -el {0}
         run: |
-          if [ -f conda_env.yml ]; then conda env update --name project3 --file conda_env.yml --prune; fi
-          conda activate project3
+          if [ -f conda_env.yml ]; then conda env update --file conda_env.yml; fi
+          conda list
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
