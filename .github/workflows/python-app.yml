@@ -5,12 +5,8 @@ name: Python application
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - '**.yml'
   pull_request:
     branches: [ "main" ]
-    paths:
-      - '**.yml'
 
 permissions:
   contents: read
@@ -18,6 +14,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}
     steps:
       - uses: conda-incubator/setup-miniconda@v2
         with:
@@ -26,10 +25,10 @@ jobs:
           channels: conda-forge
           allow-softlinks: true
           channel-priority: strict
-      - name: Install dependencies
-        shell: bash -el {0}
+          environment-file: conda_env.yml
+      - name: Activate environment
         run: |
-          conda env update --file conda_env.yml
+          conda activate project3
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
