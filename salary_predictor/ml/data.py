@@ -1,10 +1,10 @@
+import contextlib
 import numpy as np
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
 
 def process_data(
         X,
-        categorical_features=[],
         label=None,
         training=True,
         encoder=None,
@@ -54,6 +54,8 @@ def process_data(
     else:
         y = np.array([])
 
+    categorical_features = X.select_dtypes("object").columns.to_list()
+
     X_categorical = X[categorical_features].values
     X_continuous = X.drop(*[categorical_features], axis=1)
 
@@ -64,11 +66,7 @@ def process_data(
         y = lb.fit_transform(y.values).ravel()
     else:
         X_categorical = encoder.transform(X_categorical)
-        try:
+        with contextlib.suppress(AttributeError):
             y = lb.transform(y.values).ravel()
-        # Catch the case where y is None because we're doing inference.
-        except AttributeError:
-            pass
-
     X = np.concatenate([X_continuous, X_categorical], axis=1)
     return X, y, encoder, lb

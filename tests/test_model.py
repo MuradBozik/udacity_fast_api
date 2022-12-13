@@ -47,19 +47,8 @@ def test_inference(model, encoder, lb):
         }
     )
 
-    cat_features = [
-        "workclass",
-        "education",
-        "marital-status",
-        "occupation",
-        "relationship",
-        "race",
-        "sex",
-        "native-country",
-    ]
-
     X_sample, y_sample, _, _ = process_data(
-        X_sample_raw, categorical_features=cat_features, label="salary", training=False,
+        X_sample_raw, label="salary", training=False,
         encoder=encoder, lb=lb
     )
 

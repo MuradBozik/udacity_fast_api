@@ -32,26 +32,14 @@ def go(args):
     logger.info(
         f"Training data has {len(train)} and test data has {len(test)} rows")
 
-    cat_features = [
-        "workclass",
-        "education",
-        "marital-status",
-        "occupation",
-        "relationship",
-        "race",
-        "sex",
-        "native-country",
-    ]
-    logger.info("Categorical features are;\n" + f"{', '.join(cat_features)}")
-
     X_train, y_train, encoder, lb = process_data(
-        train, categorical_features=cat_features, label="salary", training=True
+        train, label="salary", training=True
     )
     logger.info("Training data processed")
 
     # Proces the test data with the process_data function.
     X_test, y_test, _, _ = process_data(
-        test, categorical_features=cat_features, label="salary", training=False,
+        test, label="salary", training=False,
         encoder=encoder, lb=lb
     )
     logger.info("Test data processed")
@@ -71,14 +59,15 @@ def go(args):
                 f"precision: {precision}, recall:{recall}, f_beta: {fbeta}")
 
     logger.info("Looking into slice performances for categorical features")
-    perform_on_slice(model, encoder, lb, test, cat_features)
+    perform_on_slice(model, encoder, lb, test)
     logger.info("Slice performances saved in slice_output.txt")
     # Saving the model, encoder and label binarizer
     save_model(model, encoder, lb, name=args.output_model_name)
 
 
-def perform_on_slice(model, encoder, lb, test, cat_features):
+def perform_on_slice(model, encoder, lb, test):
     lines = []
+    cat_features = test.select_dtypes("object").columns.to_list()
     for on in cat_features:
         lines.append(f"Slice {on}:\n")
         values = test.loc[:, on].unique()
