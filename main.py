@@ -14,6 +14,13 @@ import salary_predictor
 from pathlib import Path
 
 
+if "DYNO" in os.environ and os.path.isdir(".dvc"):
+    print("Running DVC")
+    os.system("dvc config core.no_scm true")
+    if os.system("dvc pull") != 0:
+        exit("Pull failed")
+    os.system("rm -r .dvc .apt/usr/lib/dvc")
+
 # Load model, encoder, label_binarizer
 model_folder = os.path.join(
     Path(salary_predictor.__file__).parent.parent, "model")
