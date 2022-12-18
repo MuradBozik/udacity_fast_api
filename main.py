@@ -20,6 +20,8 @@ if "DYNO" in os.environ and os.path.isdir(".dvc"):
     if os.system("dvc pull") != 0:
         exit("Pull failed")
     os.system("rm -r .dvc .apt/usr/lib/dvc")
+elif "DYNO" in os.environ:
+    print("DVC failed to run!")
 
 # Load model, encoder, label_binarizer
 model_folder = os.path.join(

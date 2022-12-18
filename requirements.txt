@@ -1,0 +1,10 @@
+fastapi==0.88.0
+hydra-core==1.3.0
+numpy==1.23.5
+pandas==1.5.2
+pytest==7.2.0
+scikit_learn==1.2.0
+setuptools==49.2.1
+uvicorn==0.20.0
+httpx==0.23.1
+git+https://github.com/MuradBozik/udacity_fast_api@main
