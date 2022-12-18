@@ -42,8 +42,6 @@ jobs:
           conda activate project3
           dvc pull
           pip install -e .
-          pip freeze > requirements.txt
-          echo "$aws-access-key-id" > key
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
